@@ -24,6 +24,12 @@ public class Server {
 
         while (!message1.equalsIgnoreCase("stop")) {
             message1 = input.readUTF();
+
+            if (message1.equalsIgnoreCase("stop")) {
+                System.out.println("Disconnecting from the client...");
+                break;
+            }
+
             System.out.println("Client says : " + message1);
 
             message2 = br.readLine();

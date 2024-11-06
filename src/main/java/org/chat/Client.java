@@ -20,6 +20,11 @@ public class Client {
             message1 = br.readLine();
             outputStream.writeUTF(message1);
 
+            if (message1.equalsIgnoreCase("stop")) {
+                System.out.println("Disconnecting from the server...");
+                break;
+            }
+
             message2 = input.readUTF();
             System.out.println("Server says  : " + message2);
         }
