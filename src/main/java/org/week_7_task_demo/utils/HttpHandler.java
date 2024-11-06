@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.Socket;
 
 import static org.week_7_task_demo.common.SimpleHttpServer.HTML_FILE_PATH;
-import static org.week_7_task_demo.common.SimpleHttpServer.PORT;
 import static org.week_7_task_demo.common.SimpleHttpServer.JSON_FILE_PATHS;
 
 public class HttpHandler implements Runnable {
@@ -30,7 +29,7 @@ public class HttpHandler implements Runnable {
                 if (parts.length >= 2 && parts[0].equals("GET")) {
                     String path = parts[1];
 
-                    if (path.equals("/") || path.equals("index.html")) {
+                    if (path.equals("/") || path.equals("/index.html")) {
                         sendNewHtmlResponse(output);
                     } else if (path.equals("/json")) {
                         sendNewJsonResponse(output);
@@ -42,6 +41,8 @@ public class HttpHandler implements Runnable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         } finally {
             try {
                 socket.close();
@@ -51,7 +52,7 @@ public class HttpHandler implements Runnable {
         }
     }
 
-    private void sendNewHtmlResponse(PrintWriter output) {
+    private void sendNewHtmlResponse(PrintWriter output) throws Exception {
         File file = new File(HTML_FILE_PATH);
 
         if (file.exists()) {
@@ -61,8 +62,8 @@ public class HttpHandler implements Runnable {
         }
     }
 
-    private void sendNewJsonResponse(PrintWriter output) {
-        File file = new File(HTML_FILE_PATH);
+    private void sendNewJsonResponse(PrintWriter output) throws Exception {
+        File file = new File(JSON_FILE_PATHS);
 
         if (file.exists()) {
             sendResponse(output, file, "text/html");
